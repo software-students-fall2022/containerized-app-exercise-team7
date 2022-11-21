@@ -8,3 +8,5 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 [Darren Le](https://github.com/DarrenLe20)
 
 [Daniel Atlas](https://github.com/Spectraorder)
+
+[Paula Seraphim](https://github.com/paulasera)
