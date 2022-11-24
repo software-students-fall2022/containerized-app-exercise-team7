@@ -76,4 +76,11 @@ def recognize(command):
         audio = r.record(source)
     return audio
     '''
+def translate(text, src, targ):
+    #If the src lang is omitted, the API will attempt 
+    #to detect the language of the text and translate it.
+    return deep_translator.DeeplTranslator(text, source_lang=src, target_lang=targ)
+
+# function to get the language of the source language
+
 recognize("Say something you would like to be translated")
