@@ -4,11 +4,11 @@
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
 
-[Local mongodb setup within Docker]({#Tag02})
+[1, Local mongodb setup within Docker](#Local mongodb database set up within Docker)
 
+[2, Required dependencies](#Required dependencies)
 
-
-## Local mongodb database set up within Docker{#Tag01}
+## Local mongodb database set up within Docker
 
 ### 1, Docker Desktop
 
@@ -56,7 +56,18 @@ Try to connect using the user information created above.
 db.auth('admin', '123456')
 ```
 
-## Contributors{#Tag02}
+## Required dependencies
+
+```python
+pip install deep_translator
+pip install SpeechRecognition
+pip install pyttsx3
+pip install pyaudio
+pip install flask
+pip install pymongo
+```
+
+## Contributors
 
 [Darren Le](https://github.com/DarrenLe20)
 
