@@ -4,9 +4,9 @@
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
 
-[1, Local mongodb setup within Docker](#Local mongodb database set up within Docker)
+<a href="#Local mongodb database set up within Docker">1, Local mongodb setup within Docker</a>
 
-[2, Required dependencies](#Required dependencies)
+<a href="#Required dependencies">2, Required dependencies</a>
 
 ## Local mongodb database set up within Docker
 
