@@ -1,5 +1,6 @@
-import pymongo
 from flask import Flask
+
+import pymongo
 import deep_translator
 import speech_recognition as sr
 import pyttsx3
@@ -25,31 +26,6 @@ p = pyaudio.PyAudio()
 # r used for speech recognition
 r = sr.Recognizer()
 
-'''
-#this function record audio and saves it to a file
-def record(file_name):
-    stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
-    frames = []
-
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-
-    wf = wave.open(file_name, 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
-'''
-# ^^ the above function may no longer be necessary
 # the following function takes in audio and converts it to text - the "command" input 
 # is input that is said to the user and what ever the user speaks is repeated back to
 # them
