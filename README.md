@@ -34,7 +34,7 @@ We can either connect to to mongo by opening the terminal inside Docker Desktop 
 docker exec -it mongo mongo admin
 ```
 
-==If using the terminal inside Docker Desktop, use mongosh to get connection:==
+**If using the terminal inside Docker Desktop, use mongosh to get connection:**
 
 ```bash
 # mongosh
