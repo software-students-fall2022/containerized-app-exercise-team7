@@ -68,6 +68,8 @@ def recognize(command):
         text = r.recognize_google(audio)
         text = text.lower()
 
+        if text=="stop":
+            return
         print("Did you say: "+text)
         #the engine will speak whatever the user says
         recognize(text)

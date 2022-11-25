@@ -33,7 +33,7 @@ def get_languagess():
             db = get_db()
             languages = db.langs.find()
             language = [{"id": langs["_id"], "lang": langs["lang"], "code": langs["code"]} for langs in languages]
-            r#eturn render_template('languages.html', languages-languages)
+            #return render_template('languages.html', languages-languages)
             return jsonify({"languages": language})
         except:
             pass
