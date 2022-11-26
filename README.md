@@ -10,3 +10,5 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 [Daniel Atlas](https://github.com/Spectraorder)
 
 [Paula Seraphim](https://github.com/paulasera)
+
+[Leo Xu](https://github.com/leo6016)
