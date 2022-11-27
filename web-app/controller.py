@@ -48,7 +48,7 @@ except Exception as e:
     # render_template('error.html', error=e) # render the edit template
     print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
     print('Database connection error:', e) # debug
-
+#set outside for ease
 transcript = ""
 def db_init():
     db.langs.insert_many([{"lang": "Bulgarian","code": "bg"},
@@ -95,38 +95,46 @@ def home():
     """
     Route for the home page
     """
+    #initalize the database with the languages that can be translated
     db_init()
+    #pass database in twice for both drop down menus
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
-        # print("FORM DATA RECEIVED")
+        # get audio from app.js
         f = request.files['audio_data']
+        #save audio to audio.wav file through flask server
         with open('audio.wav', 'wb') as audio:
             f.save(audio)
             file = 'audio.wav'
         if file:
+            #implement speech recognition
             recognizer = sr.Recognizer()
             audioFile = sr.AudioFile(file)
             with audioFile as source:
                 data = recognizer.record(source)
+            #save the audio translation to global variable for easy accesibility
             global transcript 
             transcript = recognizer.recognize_google(data, key=None)
             
-        print('file uploaded successfully')
-        #return render_template('home.html')
+        #print('file uploaded successfully')
+    #pass database in to be read in home.html
     return render_template('home.html', inp=inp, out=out)
 
 #route for translating the recognized audio file input using machine learning
 
 @app.route('/translate', methods = ["GET", "POST"])
 def translate():
+    #get the options selected from input and output from home.html
     inp = request.form.get('input')
     out = request.form.get('output')
+    #using the languages chosen by the user locate their doc in the database
     src = db.langs.find_one({"lang": str(inp)})
     targ = db.langs.find_one({"lang": str(out)})
+    #isolate the code to be used for translation
     s = src["code"]
     t = targ["code"]
-
+    #call the trans function and translate the text to language
     in_out = trans.trans(transcript, s, t)
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
