@@ -1,3 +1,5 @@
+#moved to web-app folder because i was having a hard time importing it into controller.py 
+#- can be moved if someone can figure out import
 from deep_translator import GoogleTranslator
 
 def trans(input,src,tgt):
