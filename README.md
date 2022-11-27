@@ -78,3 +78,5 @@ Chinese
 [Paula Seraphim](https://github.com/paulasera)
 
 [Leo Xu](https://github.com/leo6016)
+
+[Hillary Davis](https://github.com/hillarydavis1)
