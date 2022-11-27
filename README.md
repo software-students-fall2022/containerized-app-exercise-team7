@@ -6,7 +6,9 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 
 [1, Local mongodb setup within Docker](#local-mongodb-database-set-up-within-docker)
 
-[2, Required dependencies](#required-dependencies)
+[2, Root environment](#root-environment)
+
+[3, Required dependencies](#required-dependencies)
 
 ## Local mongodb database set up within Docker
 
@@ -54,6 +56,19 @@ Try to connect using the user information created above.
 
 ```bash
 db.auth('admin', '123456')
+```
+
+## Root environment
+
+Create a `.env` file and can set them as environment variables.
+
+Under root for the project, create `.env` file with content:
+
+```env
+FLASK_ENV = development
+
+MONGO_URI = mongodb://localhost:27017/
+MONGO_DBNAME = language
 ```
 
 ## Required dependencies
