@@ -66,9 +66,11 @@ pip install pyaudio
 pip install flask
 pip install pymongo
 ```
+
 ## Supported Languages
 English
 Chinese
+
 ## Contributors
 
 [Darren Le](https://github.com/DarrenLe20)
