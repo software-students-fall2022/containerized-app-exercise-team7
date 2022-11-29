@@ -1,9 +1,8 @@
-autopep8==2.0.0
-black==22.10.0
 build==0.9.0
 deep-translator==1.9.1
 Django==3.2.16
 Flask==2.2.2
+Flask-Bootstrap-3.3.7.1
 flask-mongoengine==1.0.0
 Flask-SQLAlchemy==3.0.2
 Flask-WTF==1.0.1
