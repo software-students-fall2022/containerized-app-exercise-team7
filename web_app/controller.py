@@ -17,6 +17,8 @@ import pymongo
 import datetime
 import sys
 #import speech_recognition as sr
+app = Flask(__name__)
+bootstrap=Bootstrap(app)
 
 # instantiate the app
 def start_app():
@@ -141,5 +143,5 @@ def translate():
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 if __name__ == "__main__":
-    app=start_app()
+    # app=start_app()
     app.run(debug=True, threaded = True)

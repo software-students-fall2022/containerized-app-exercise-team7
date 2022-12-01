@@ -17,4 +17,3 @@ class TestWebApp(unittest.TestCase):
     def test_app(self):
         assert self.app is not None
         assert current_app == self.app
-    
