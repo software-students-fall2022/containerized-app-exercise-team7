@@ -9,6 +9,11 @@ on:
   pull_request:
     branches-ignore: ["feedback"]
 
+env:
+  FLASK_ENV: development
+  MONGO_URI: mongodb://localhost:27017/
+  MONGO_DBNAME: language
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,8 +31,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --upgrade PyAudio
           python -m pip install --upgrade pyttsx3
+          python -m pip install --upgrade SpeechRecognition
+          python -m pip install --upgrade deep-translator
+          python -m pip install --upgrade pymongo
+          python -m pip install --upgrade flask
+          python -m pip install --upgrade Flask-Bootstrap
+          python -m pip install --upgrade Werkzeug
+          python -m pip install --upgrade python-dotenv
+          sudo apt-get install portaudio19-dev
+          python -m pip install --upgrade PyAudio
           python -m pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
