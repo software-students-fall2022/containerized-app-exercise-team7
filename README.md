@@ -84,6 +84,9 @@ pip install pymongo
 ## Supported Languages
 English
 Chinese
+French
+Spanish
+Japanese
 ## Contributors
 
 [Darren Le](https://github.com/DarrenLe20)
