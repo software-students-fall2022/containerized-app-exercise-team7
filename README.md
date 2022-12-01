@@ -46,6 +46,12 @@ docker exec -it mongo mongo admin
 # mongosh
 ```
 
+Then in order to set up a admin account:
+
+```bash
+# use admin
+```
+
 Create a user named admin with a password of 123456:
 
 ```bash
