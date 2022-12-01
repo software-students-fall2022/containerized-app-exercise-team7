@@ -1,6 +1,6 @@
 import unittest
 from flask import current_app
-from controller import app,db
+from controller import app,get_db
 
 
 class Test_Web_App(unittest.TestCase):
@@ -19,4 +19,5 @@ class Test_Web_App(unittest.TestCase):
         assert current_app == self.app
 
     def test_db(self):
+        db=get_db()
         assert db.list_collection_names==["admin","config","language","local"]

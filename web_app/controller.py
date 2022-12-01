@@ -56,6 +56,9 @@ except Exception as e:
 # set outside for ease
 transcript = ""
 
+def get_db():
+    return db
+
 
 def db_init():
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
