@@ -28,7 +28,6 @@ bootstrap = Bootstrap(app)
 #input_audio = myclient["input_audio"]
 #lang = myclient["language"]
 
-
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 config = dotenv_values(".env")
@@ -37,6 +36,7 @@ config = dotenv_values(".env")
 if config['FLASK_ENV'] == 'development':
     # turn on debugging, if in development
     app.debug = True  # debug mnode
+
 
 
 # connect to the database
@@ -48,6 +48,7 @@ try:
     db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
     # if we get here, the connection worked!
     print(' *', 'Connected to MongoDB!')
+
 except Exception as e:
     # the ping command failed, so the connection is not available.
     # render_template('error.html', error=e) # render the edit template
@@ -95,18 +96,17 @@ def db_init():
 
 #****************** All Routes ******************************#
 # (DONE)
-# route for homepage
-# Takes in a audio file and display the transcript
 
-
-@app.route('/', methods=["GET", "POST"])
+#route for homepage 
+#Takes in a audio file and display the transcript
+@app.route('/', methods = ["GET", "POST"])
 def home():
     """
     Route for the home page
     """
-    # initalize the database with the languages that can be translated
+    #initalize the database with the languages that can be translated
     db_init()
-    # pass database in twice for both drop down menus
+    #pass database in twice for both drop down menus
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
@@ -117,7 +117,7 @@ def home():
             f.save(audio)
             file = 'audio.wav'
         if file:
-            # implement speech recognition
+            #implement speech recognition
             recognizer = sr.Recognizer()
             audioFile = sr.AudioFile(file)
             with audioFile as source:
@@ -151,3 +151,4 @@ def translate():
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
+
