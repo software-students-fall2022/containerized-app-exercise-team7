@@ -33,7 +33,7 @@ bootstrap = Bootstrap(app)
 config = dotenv_values(".env")
 
 # turn on debugging if in development mode
-if config['FLASK_ENV'] == 'development':
+if config['FLASK_DEBUG'] == 'development':
     # turn on debugging, if in development
     app.debug = True  # debug mode
 
