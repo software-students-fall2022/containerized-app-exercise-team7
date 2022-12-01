@@ -10,7 +10,7 @@ on:
     branches-ignore: ["feedback"]
 
 env:
-  FLASK_DEBUG: development
+  FLASK_ENV: development
   MONGO_URI: mongodb://localhost:27017/
   MONGO_DBNAME: language
 
