@@ -1,0 +1,20 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+}
+
+header {
+  margin-bottom: 30px;
+  padding: 50px;
+  background-color: #728BF6;
+  color: #FAFAFB;
+}
+
+header h1 {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
