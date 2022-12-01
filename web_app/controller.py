@@ -35,8 +35,7 @@ config = dotenv_values(".env")
 # turn on debugging if in development mode
 if config['FLASK_ENV'] == 'development':
     # turn on debugging, if in development
-    app.debug = True  # debug mnode
-
+    app.debug = True  # debug mode
 
 
 # connect to the database
@@ -94,19 +93,21 @@ def db_init():
 #      global currentUser
 #      currentUser=n
 
-#****************** All Routes ******************************#
+# ****************** All Routes ******************************#
 # (DONE)
 
-#route for homepage 
-#Takes in a audio file and display the transcript
-@app.route('/', methods = ["GET", "POST"])
+# route for homepage
+# Takes in a audio file and display the transcript
+
+
+@app.route('/', methods=["GET", "POST"])
 def home():
     """
     Route for the home page
     """
-    #initalize the database with the languages that can be translated
+    # initalize the database with the languages that can be translated
     db_init()
-    #pass database in twice for both drop down menus
+    # pass database in twice for both drop down menus
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
@@ -117,7 +118,7 @@ def home():
             f.save(audio)
             file = 'audio.wav'
         if file:
-            #implement speech recognition
+            # implement speech recognition
             recognizer = sr.Recognizer()
             audioFile = sr.AudioFile(file)
             with audioFile as source:
@@ -151,4 +152,3 @@ def translate():
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
-

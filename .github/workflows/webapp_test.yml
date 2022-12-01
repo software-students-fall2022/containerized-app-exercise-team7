@@ -9,6 +9,11 @@ on:
   pull_request:
     branches-ignore: ["feedback"]
 
+env:
+  FLASK_ENV: development
+  MONGO_URI: mongodb://localhost:27017/
+  MONGO_DBNAME: language
+
 jobs:
   build:
     runs-on: ubuntu-latest
