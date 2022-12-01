@@ -1,11 +1,11 @@
 import unittest
 from flask import current_app
-from web_app import create_app
+from controller import start_app
 
 
 class TestWebApp(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
+        self.app = start_app()
         self.appctx = self.app.app_context()
         self.appctx.push()
 

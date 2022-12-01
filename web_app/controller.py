@@ -19,8 +19,10 @@ import sys
 #import speech_recognition as sr
 
 # instantiate the app
-app = Flask(__name__)
-bootstrap=Bootstrap(app)
+def start_app():
+    app = Flask(__name__)
+    bootstrap=Bootstrap(app)
+    return app
 
 #myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 #input_audio = myclient["input_audio"]
@@ -139,4 +141,5 @@ def translate():
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 if __name__ == "__main__":
+    app=start_app()
     app.run(debug=True, threaded = True)
