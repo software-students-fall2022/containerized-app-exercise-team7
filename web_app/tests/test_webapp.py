@@ -1,11 +1,11 @@
 import unittest
 from flask import current_app
-from controller import start_app
+from controller import app
 
 
-class TestWebApp(unittest.TestCase):
+class Test_Web_App(unittest.TestCase):
     def setUp(self):
-        self.app = start_app()
+        self.app = app
         self.appctx = self.app.app_context()
         self.appctx.push()
 
@@ -17,4 +17,3 @@ class TestWebApp(unittest.TestCase):
     def test_app(self):
         assert self.app is not None
         assert current_app == self.app
-    
