@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
   <body>
     <h1>Record Your Audio</h1>
 
     <div id="controls">
-     <button id="recordButton">Record</button>
-     <button id="pauseButton">Pause</button>
-     <button id="stopButton">Stop</button>
+      <button id="recordButton">Record</button>
+      <button id="pauseButton">Pause</button>
+      <button id="stopButton">Stop</button>
     </div>
     <div id="formats">Format: start recording to see sample rate</div>
     <p><strong>Recordings:</strong></p>
@@ -14,27 +23,28 @@
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
     <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
     <script src="/static/js/app.js"></script>
-    <p>Select "Upload" next to the audio you would like 
-      to translate. Select your input language, 
-      and the one you would like to be output</p>
+    <p>
+      Select "Upload" next to the audio you would like to translate. Select your
+      input language, and the one you would like to be output
+    </p>
     <form class="form-inline" method="POST" action="{{ url_for('translate') }}">
       <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon">Input Language</span>
-                <select name="input" class="selectpicker form-control">
-                  {% for o in inp %}
-                  <option value="{{ o.lang }}">{{ o.lang }}</option>
-                  {% endfor %}
-                </select>
-            <span class="input-group-addon">Output Language</span>
-                <select name="output" class="selectpicker form-control">
-                  {% for o in out %}
-                  <option value="{{ o.lang }}">{{ o.lang }}</option>
-                  {% endfor %}
-                </select>   
-          </div>
-          <button type="submit" class="btn btn-default">Translate</button>
+          <span class="input-group-addon">Input Language</span>
+          <select name="input" class="selectpicker form-control">
+            {% for o in inp %}
+            <option value="{{ o.lang }}">{{ o.lang }}</option>
+            {% endfor %}
+          </select>
+          <span class="input-group-addon">Output Language</span>
+          <select name="output" class="selectpicker form-control">
+            {% for o in out %}
+            <option value="{{ o.lang }}">{{ o.lang }}</option>
+            {% endfor %}
+          </select>
         </div>
-      </form>
+        <button type="submit" class="btn btn-default">Translate</button>
+      </div>
+    </form>
   </body>
 </html>
