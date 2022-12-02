@@ -117,7 +117,6 @@ def db_init(db):
                           {"lang": "Ukrainian", "code": "uk"},
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
-    print(db.list_collection_names())
 
 # #********** All Variables ***********************************#
 # currentUser = "-1"
@@ -139,7 +138,7 @@ def home():
     """
     db=get_db()
     # initalize the database with the languages that can be translated
-    db_init()
+    db_init(db)
     # pass database in twice for both drop down menus
     inp = db.langs.find({})
     out = db.langs.find({})
