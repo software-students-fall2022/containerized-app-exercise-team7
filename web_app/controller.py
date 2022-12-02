@@ -39,7 +39,10 @@ if config['FLASK_DEBUG'] == 'development':
 
 
 # connect to the database
-cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+cxn = pymongo.MongoClient(config['MONGO_URI'], 
+                        username=config['MONGO_USER'],
+                        password=config['MONGO_PASS'],
+                        serverSelectionTimeoutMS=5000)
 try:
     # verify the connection works by pinging the database
     # The ping command is cheap and does not require auth.
@@ -59,15 +62,13 @@ transcript = ""
 
 def get_db():
     config = dotenv_values(".env")
-    cxn = pymongo.MongoClient(
-        config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
     cxn.admin.command('ping')
     db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
     return db
 
 
 def db_init():
-    db.langs.delete_many({})
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
@@ -97,26 +98,18 @@ def db_init():
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
 
-# #********** All Variables ***********************************#
-# currentUser = "-1"
-# def setvalue(n):
-#      global currentUser
-#      currentUser=n
-
 # ****************** All Routes ******************************#
 # (DONE)
 
 # route for homepage
 # Takes in a audio file and display the transcript
-
-
 @app.route('/', methods=["GET", "POST"])
 def home():
     """
     Route for the home page
     """
     # clear database
-
+    db.langs.delete_many({})
     # initalize the database with the languages that can be translated
     db_init()
     # pass database in
