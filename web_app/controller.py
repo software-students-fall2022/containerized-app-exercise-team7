@@ -120,9 +120,7 @@ def home():
     # initalize the database with the languages that can be translated
     db_init()
     # pass database in
-    inp = db.langs.find({
-        "code": "en"  # default language = english
-    })
+    inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
         # get audio from app.js
