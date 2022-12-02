@@ -53,10 +53,6 @@ button:active {
   align-items: center;
 }
 
-.input-group {
-  display: flex;
-  gap: 100px;
-}
 
 select {
   border-radius: 5px;
