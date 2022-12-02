@@ -88,9 +88,60 @@ pip install flask
 pip install pymongo
 ```
 
+## Usage Instructions
+
+RECORD a voice message in English
+
+- Pause button: Temporary stop recording
+
+- Stop button: Stop recording
+
+UPLOAD or SAVE the voice message
+
+- Upload button: Upload the voice message to the database
+
+- Save button: Save the voice message to the local machine
+
+CHOOSE a language to translate the recording to
+
+- Select a language from the dropdown menu
+
+TRANSLATE the recording by clicking the translate button
+
 ## Supported Languages
-English
-Chinese
+
+### Input language
+
+- English
+
+### Output languages
+
+- Bulgarian
+- Czech
+- Danish
+- German
+- Greek
+- English
+- Spanish
+- Estonian
+- Finnish
+- French
+- Hungarian
+- Italian
+- Japanese
+- Lithuania
+- Latvian
+- Dutch
+- Polish
+- Portuguese (Brazil)
+- Portuguese (Portugal)
+- Romanian
+- Russian
+- Slovak
+- Swedish
+- Turkish
+- Ukrainian
+- Chinese
 
 ## Contributors
 
