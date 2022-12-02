@@ -30,45 +30,38 @@ bootstrap = Bootstrap(app)
 
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
-config = dotenv_values(".env")
-
-# turn on debugging if in development mode
-if config['FLASK_DEBUG'] == 'development':
-    # turn on debugging, if in development
-    app.debug = True  # debug mode
-
-
-# connect to the database
-cxn = pymongo.MongoClient(config['MONGO_URI'], 
-                        username=config['MONGO_USER'],
-                        password=config['MONGO_PASS'],
-                        serverSelectionTimeoutMS=5000)
-try:
-    # verify the connection works by pinging the database
-    # The ping command is cheap and does not require auth.
-    cxn.admin.command('ping')
-    db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
-    # if we get here, the connection worked!
-    print(' *', 'Connected to MongoDB!')
-
-except Exception as e:
-    # the ping command failed, so the connection is not available.
-    # render_template('error.html', error=e) # render the edit template
-    print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
-    print('Database connection error:', e)  # debug
-# set outside for ease
-transcript = ""
-
 
 def get_db():
+        # turn on debugging if in development mode
     config = dotenv_values(".env")
-    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-    cxn.admin.command('ping')
-    db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+    if config['FLASK_DEBUG'] == 'development':
+        # turn on debugging, if in development
+        app.debug = True  # debug mode
+
+        # cxn = pymongo.MongoClient(config['MONGO_URI'],
+        #                     username=config['MONGO_USER'],
+        #                     password=config['MONGO_PASS'],
+        #                     serverSelectionTimeoutMS=5000)
+        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        try:
+            # verify the connection works by pinging the database
+            # The ping command is cheap and does not require auth.
+            cxn.admin.command('ping')
+            db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+            # if we get here, the connection worked!
+            print(' *', 'Connected to MongoDB!')
+
+        except Exception as e:
+            # the ping command failed, so the connection is not available.
+            # render_template('error.html', error=e) # render the edit template
+            print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+            print('Database connection error:', e)  # debug
+        # set outside for ease
     return db
 
 
-def db_init():
+def db_init(db):
+    db.langs.delete_many({})
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
@@ -108,11 +101,12 @@ def home():
     """
     Route for the home page
     """
-    # clear database
-    db.langs.delete_many({})
+
+    db=get_db()
     # initalize the database with the languages that can be translated
-    db_init()
-    # pass database in
+    db_init(db)
+    # pass database in twice for both drop down menus
+
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
@@ -144,6 +138,7 @@ def translate():
     # get the options selected from input and output from home.html
     inp = "English"
     out = request.form.get('output')
+    db=get_db()
     # using the languages chosen by the user locate their doc in the database
     src = db.langs.find_one({"lang": str(inp)})
     targ = db.langs.find_one({"lang": str(out)})
