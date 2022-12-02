@@ -121,7 +121,7 @@ def home():
     db_init()
     # pass database in
     inp = db.langs.find({
-        "code": "en"
+        "code": "en"  # default language = english
     })
     out = db.langs.find({})
     if request.method == "POST":
@@ -162,6 +162,11 @@ def translate():
     # call the trans function and translate the text to language
     in_out = trans.trans(transcript, s, t)
     return render_template('translate.html', in_out=in_out, transcript=transcript)
+
+
+@app.route('/dashboard', methods=["GET", "POST"])
+def dashboard_display():
+    return render_template('dashboard.html')
 
 
 if __name__ == "__main__":
