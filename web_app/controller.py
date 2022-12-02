@@ -39,7 +39,10 @@ if config['FLASK_DEBUG'] == 'development':
 
 
 # connect to the database
-cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+cxn = pymongo.MongoClient(config['MONGO_URI'],
+                        username=config['MONGO_USER'],
+                        password=config['MONGO_PASS'],
+                        serverSelectionTimeoutMS=5000)
 try:
     # verify the connection works by pinging the database
     # The ping command is cheap and does not require auth.
@@ -93,6 +96,7 @@ def db_init():
                           {"lang": "Ukrainian", "code": "uk"},
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
+    print(db.list_collection_names)
 
 # #********** All Variables ***********************************#
 # currentUser = "-1"
