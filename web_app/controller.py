@@ -30,7 +30,7 @@ bootstrap = Bootstrap(app)
 
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
-config = dotenv_values(".env")
+# config = dotenv_values(".env")
 
 # def connection()
 #     # turn on debugging if in development mode
@@ -60,6 +60,7 @@ config = dotenv_values(".env")
 
 def get_db():
         # turn on debugging if in development mode
+    config = dotenv_values(".env")
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
