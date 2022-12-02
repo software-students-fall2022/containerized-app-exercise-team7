@@ -11,7 +11,8 @@
   </head>
   <body>
     <header>
-      <h1>Record Your Audio</h1>
+      <h1>Record Audio</h1>
+      <a href="{{ url_for('dashboard_display') }}" class="header-btn">DB</a>
     </header>
     <main>
       <div id="controls">
@@ -26,8 +27,8 @@
       <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
       <script src="/static/js/app.js"></script>
       <p>
-        Select "Upload" next to the audio you would like to translate. Select
-        your input language, and the one you would like to be output
+        Select "Upload" next to the audio you would like to translate and select
+        the language you would like to translate the recording to.
       </p>
       <form
         class="form-inline"
@@ -36,14 +37,7 @@
       >
         <div class="form-group">
           <div class="input-group">
-            <div>
-              <span class="input-group-addon">Input Language</span>
-              <select name="input" class="selectpicker form-control">
-                {% for o in inp %}
-                <option value="{{ o.lang }}">{{ o.lang }}</option>
-                {% endfor %}
-              </select>
-            </div>
+            <div></div>
             <div>
               <span class="input-group-addon">Output Language</span>
               <select name="output" class="selectpicker form-control">

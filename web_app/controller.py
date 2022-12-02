@@ -30,33 +30,6 @@ bootstrap = Bootstrap(app)
 
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
-# config = dotenv_values(".env")
-
-# def connection()
-#     # turn on debugging if in development mode
-#     if config['FLASK_DEBUG'] == 'development':
-#         # turn on debugging, if in development
-#         app.debug = True  # debug mode
-
-#         cxn = pymongo.MongoClient(config['MONGO_URI'],
-#                             username=config['MONGO_USER'],
-#                             password=config['MONGO_PASS'],
-#                             serverSelectionTimeoutMS=5000)
-#         try:
-#             # verify the connection works by pinging the database
-#             # The ping command is cheap and does not require auth.
-#             cxn.admin.command('ping')
-#             db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
-#             # if we get here, the connection worked!
-#             print(' *', 'Connected to MongoDB!')
-
-#         except Exception as e:
-#             # the ping command failed, so the connection is not available.
-#             # render_template('error.html', error=e) # render the edit template
-#             print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
-#             print('Database connection error:', e)  # debug
-#         # set outside for ease
-
 
 def get_db():
         # turn on debugging if in development mode
@@ -106,8 +79,8 @@ def db_init(db):
                           {"lang": "Latvian", "code": "lv"},
                           {"lang": "Dutch", "code": "nl"},
                           {"lang": "Polish", "code": "pl"},
-                          {"lang": "Portuguese", "code": "pt-BR"},
-                          {"lang": "Portuguese", "code": "pt-PT"},
+                          {"lang": "Portuguese (Brazil)", "code": "pt-BR"},
+                          {"lang": "Portuguese (Portugal)", "code": "pt-PT"},
                           {"lang": "Romanian", "code": "ro"},
                           {"lang": "Russian", "code": "ru"},
                           {"lang": "Slovak", "code": "sk"},
@@ -118,28 +91,22 @@ def db_init(db):
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
 
-# #********** All Variables ***********************************#
-# currentUser = "-1"
-# def setvalue(n):
-#      global currentUser
-#      currentUser=n
-
 # ****************** All Routes ******************************#
 # (DONE)
 
 # route for homepage
 # Takes in a audio file and display the transcript
-
-
 @app.route('/', methods=["GET", "POST"])
 def home():
     """
     Route for the home page
     """
+
     db=get_db()
     # initalize the database with the languages that can be translated
     db_init(db)
     # pass database in twice for both drop down menus
+
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
@@ -169,7 +136,7 @@ def home():
 @app.route('/translate', methods=["GET", "POST"])
 def translate():
     # get the options selected from input and output from home.html
-    inp = request.form.get('input')
+    inp = "English"
     out = request.form.get('output')
     db=get_db()
     # using the languages chosen by the user locate their doc in the database
@@ -181,6 +148,11 @@ def translate():
     # call the trans function and translate the text to language
     in_out = trans.trans(transcript, s, t)
     return render_template('translate.html', in_out=in_out, transcript=transcript)
+
+
+@app.route('/dashboard', methods=["GET", "POST"])
+def dashboard_display():
+    return render_template('dashboard.html')
 
 
 if __name__ == "__main__":
