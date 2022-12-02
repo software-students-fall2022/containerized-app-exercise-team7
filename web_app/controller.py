@@ -65,10 +65,11 @@ def get_db():
         # turn on debugging, if in development
         app.debug = True  # debug mode
 
-        cxn = pymongo.MongoClient(config['MONGO_URI'],
-                            username=config['MONGO_USER'],
-                            password=config['MONGO_PASS'],
-                            serverSelectionTimeoutMS=5000)
+        # cxn = pymongo.MongoClient(config['MONGO_URI'],
+        #                     username=config['MONGO_USER'],
+        #                     password=config['MONGO_PASS'],
+        #                     serverSelectionTimeoutMS=5000)
+        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
