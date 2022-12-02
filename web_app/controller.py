@@ -56,15 +56,18 @@ except Exception as e:
 # set outside for ease
 transcript = ""
 
+
 def get_db():
     config = dotenv_values(".env")
-    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    cxn = pymongo.MongoClient(
+        config['MONGO_URI'], serverSelectionTimeoutMS=5000)
     cxn.admin.command('ping')
     db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
     return db
 
 
 def db_init():
+    db.langs.delete_many({})
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
@@ -82,8 +85,8 @@ def db_init():
                           {"lang": "Latvian", "code": "lv"},
                           {"lang": "Dutch", "code": "nl"},
                           {"lang": "Polish", "code": "pl"},
-                          {"lang": "Portuguese", "code": "pt-BR"},
-                          {"lang": "Portuguese", "code": "pt-PT"},
+                          {"lang": "Portuguese (Brazil)", "code": "pt-BR"},
+                          {"lang": "Portuguese (Portugal)", "code": "pt-PT"},
                           {"lang": "Romanian", "code": "ro"},
                           {"lang": "Russian", "code": "ru"},
                           {"lang": "Slovak", "code": "sk"},
@@ -112,10 +115,14 @@ def home():
     """
     Route for the home page
     """
+    # clear database
+
     # initalize the database with the languages that can be translated
     db_init()
-    # pass database in twice for both drop down menus
-    inp = db.langs.find({})
+    # pass database in
+    inp = db.langs.find({
+        "code": "en"
+    })
     out = db.langs.find({})
     if request.method == "POST":
         # get audio from app.js
