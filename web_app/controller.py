@@ -120,9 +120,7 @@ def home():
     # initalize the database with the languages that can be translated
     db_init()
     # pass database in
-    inp = db.langs.find({
-        "code": "en"
-    })
+    inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
         # get audio from app.js
@@ -151,7 +149,7 @@ def home():
 @app.route('/translate', methods=["GET", "POST"])
 def translate():
     # get the options selected from input and output from home.html
-    inp = request.form.get('input')
+    inp = "English"
     out = request.form.get('output')
     # using the languages chosen by the user locate their doc in the database
     src = db.langs.find_one({"lang": str(inp)})
@@ -162,6 +160,11 @@ def translate():
     # call the trans function and translate the text to language
     in_out = trans.trans(transcript, s, t)
     return render_template('translate.html', in_out=in_out, transcript=transcript)
+
+
+@app.route('/dashboard', methods=["GET", "POST"])
+def dashboard_display():
+    return render_template('dashboard.html')
 
 
 if __name__ == "__main__":

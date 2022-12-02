@@ -9,6 +9,22 @@ header {
   padding: 50px;
   background-color: #728BF6;
   color: #FAFAFB;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-btn {
+  border-radius: 15px;
+  background-color: #728BF6;
+  color: #FAFAFB;
+  border: 2px solid #FAFAFB;
+  padding: 15px;
+  font-size: large;
+  text-decoration: none;
+}
+
+.header-btn:active {
+  transform: translateY(2px);
 }
 
 body {
