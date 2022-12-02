@@ -32,57 +32,61 @@ bootstrap = Bootstrap(app)
 # if you do not yet have a file named .env, make one based on the template in env.example
 config = dotenv_values(".env")
 
-# turn on debugging if in development mode
-if config['FLASK_DEBUG'] == 'development':
-    # turn on debugging, if in development
-    app.debug = True  # debug mode
+# def connection()
+#     # turn on debugging if in development mode
+#     if config['FLASK_DEBUG'] == 'development':
+#         # turn on debugging, if in development
+#         app.debug = True  # debug mode
 
-    cxn = pymongo.MongoClient(config['MONGO_URI'],
-                        username=config['MONGO_USER'],
-                        password=config['MONGO_PASS'],
-                        serverSelectionTimeoutMS=5000)
-    try:
-        # verify the connection works by pinging the database
-        # The ping command is cheap and does not require auth.
-        cxn.admin.command('ping')
-        db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
-        # if we get here, the connection worked!
-        print(' *', 'Connected to MongoDB!')
+#         cxn = pymongo.MongoClient(config['MONGO_URI'],
+#                             username=config['MONGO_USER'],
+#                             password=config['MONGO_PASS'],
+#                             serverSelectionTimeoutMS=5000)
+#         try:
+#             # verify the connection works by pinging the database
+#             # The ping command is cheap and does not require auth.
+#             cxn.admin.command('ping')
+#             db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+#             # if we get here, the connection worked!
+#             print(' *', 'Connected to MongoDB!')
 
-    except Exception as e:
-        # the ping command failed, so the connection is not available.
-        # render_template('error.html', error=e) # render the edit template
-        print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
-        print('Database connection error:', e)  # debug
-    # set outside for ease
+#         except Exception as e:
+#             # the ping command failed, so the connection is not available.
+#             # render_template('error.html', error=e) # render the edit template
+#             print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+#             print('Database connection error:', e)  # debug
+#         # set outside for ease
 
 
 def get_db():
-    cxn_test = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-    db_test = cxn_test[config['MONGO_DBNAME']]  # store a reference to the database
-    return db_test
+        # turn on debugging if in development mode
+    if config['FLASK_DEBUG'] == 'development':
+        # turn on debugging, if in development
+        app.debug = True  # debug mode
+
+        cxn = pymongo.MongoClient(config['MONGO_URI'],
+                            username=config['MONGO_USER'],
+                            password=config['MONGO_PASS'],
+                            serverSelectionTimeoutMS=5000)
+        try:
+            # verify the connection works by pinging the database
+            # The ping command is cheap and does not require auth.
+            cxn.admin.command('ping')
+            db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+            # if we get here, the connection worked!
+            print(' *', 'Connected to MongoDB!')
+
+        except Exception as e:
+            # the ping command failed, so the connection is not available.
+            # render_template('error.html', error=e) # render the edit template
+            print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+            print('Database connection error:', e)  # debug
+        # set outside for ease
+    return db
 
 
-def db_init():
-    # cxn = pymongo.MongoClient(config['MONGO_URI'],
-    #                     username=config['MONGO_USER'],
-    #                     password=config['MONGO_PASS'],
-    #                     serverSelectionTimeoutMS=5000)
-    # try:
-    #     # verify the connection works by pinging the database
-    #     # The ping command is cheap and does not require auth.
-    #     cxn.admin.command('ping')
-    #     db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
-    #     # if we get here, the connection worked!
-    #     print(' *', 'Connected to MongoDB!')
-
-    # except Exception as e:
-    #     # the ping command failed, so the connection is not available.
-    #     # render_template('error.html', error=e) # render the edit template
-    #     print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
-    #     print('Database connection error:', e)  # debug
-    # # set outside for ease
-    # db.langs.delete_many([{}])
+def db_init(db):
+    db.langs.delete_many([{}])
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
@@ -131,7 +135,7 @@ def home():
     """
     Route for the home page
     """
-    db.langs.delete_many([{}])
+    db=get_db()
     # initalize the database with the languages that can be translated
     db_init()
     # pass database in twice for both drop down menus
