@@ -96,7 +96,7 @@ def db_init():
                           {"lang": "Ukrainian", "code": "uk"},
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
-    print(db.list_collection_names)
+    print(db.list_collection_names())
 
 # #********** All Variables ***********************************#
 # currentUser = "-1"

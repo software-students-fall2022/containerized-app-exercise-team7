@@ -26,7 +26,7 @@ class Test_Web_App(unittest.TestCase):
 
     def test_db_collection(self):
         db=get_db()
-        assert db.list_collection_names=="langs"
+        assert db.list_collection_names==["langs"]
     
     def test_db_languages(self):
         db=get_db()
