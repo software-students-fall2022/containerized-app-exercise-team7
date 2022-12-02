@@ -58,9 +58,6 @@ if config['FLASK_DEBUG'] == 'development':
 
 
 def get_db():
-    config = dotenv_values(".env")
-    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-    cxn.admin.command('ping')
     db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
     return db
 
