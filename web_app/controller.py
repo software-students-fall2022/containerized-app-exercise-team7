@@ -170,6 +170,7 @@ def translate():
     # get the options selected from input and output from home.html
     inp = request.form.get('input')
     out = request.form.get('output')
+    db=get_db()
     # using the languages chosen by the user locate their doc in the database
     src = db.langs.find_one({"lang": str(inp)})
     targ = db.langs.find_one({"lang": str(out)})
