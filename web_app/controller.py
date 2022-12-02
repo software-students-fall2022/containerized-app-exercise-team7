@@ -37,6 +37,25 @@ if config['FLASK_DEBUG'] == 'development':
     # turn on debugging, if in development
     app.debug = True  # debug mode
 
+    cxn = pymongo.MongoClient(config['MONGO_URI'],
+                        username=config['MONGO_USER'],
+                        password=config['MONGO_PASS'],
+                        serverSelectionTimeoutMS=5000)
+    try:
+        # verify the connection works by pinging the database
+        # The ping command is cheap and does not require auth.
+        cxn.admin.command('ping')
+        db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+        # if we get here, the connection worked!
+        print(' *', 'Connected to MongoDB!')
+
+    except Exception as e:
+        # the ping command failed, so the connection is not available.
+        # render_template('error.html', error=e) # render the edit template
+        print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+        print('Database connection error:', e)  # debug
+    # set outside for ease
+
 
 def get_db():
     config = dotenv_values(".env")
