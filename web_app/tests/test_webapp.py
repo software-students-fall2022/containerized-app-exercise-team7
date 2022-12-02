@@ -1,6 +1,6 @@
 import unittest
 from flask import current_app
-from controller import app
+from controller import app,get_db
 
 
 class Test_Web_App(unittest.TestCase):
@@ -17,3 +17,9 @@ class Test_Web_App(unittest.TestCase):
     def test_app(self):
         assert self.app is not None
         assert current_app == self.app
+
+    def test_db(self):
+        db=get_db()
+        print(db.list_collection_names)
+        s=db.list_collection_names
+        assert db.list_collection_names==s

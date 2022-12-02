@@ -56,6 +56,13 @@ except Exception as e:
 # set outside for ease
 transcript = ""
 
+def get_db():
+    config = dotenv_values(".env")
+    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    cxn.admin.command('ping')
+    db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+    return db
+
 
 def db_init():
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
