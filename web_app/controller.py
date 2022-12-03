@@ -18,6 +18,7 @@ import datetime
 import sys
 #import speech_recognition as sr
 
+recorded = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -109,6 +110,7 @@ def home():
     # inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
+        recorded = True
         # get audio from app.js
         f = request.files['audio_data']
         # save audio to audio.wav file through flask server
