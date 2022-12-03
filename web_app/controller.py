@@ -9,6 +9,7 @@ import speech_recognition as sr
 import sys
 import os
 import flask
+import flask
 import trans
 import importlib
 import itertools
@@ -125,7 +126,6 @@ def home():
         # save audio to audio.wav file through flask server
         with open('audio.wav', 'wb') as audio:
             f.save(audio)
-            # global file
             file = 'audio.wav'
         if file:
             # implement speech recognition
@@ -137,8 +137,6 @@ def home():
             global transcript
             transcript = recognizer.recognize_google(data, key=None)
     # pass database in to be read in home.html
-    return render_template('home.html', out=out)
-    # return render_template('home.html', inp=inp, out=out)
     return render_template('home.html', out=out)
 
 # route for translating the recognized audio file input using machine learning
