@@ -15,10 +15,16 @@
       <a href="{{ url_for('home') }}" class="header-btn"> &#x2190; </a>
     </header>
     <main>
-      <h1>Input</h1>
-      <p>{{transcript}}</p>
-      <h1>Translation</h1>
-      <p>{{in_out}}</p>
+      <div class="result">
+        <div id="input-stt">
+          <h1>Input</h1>
+          <p>{{transcript}}</p>
+        </div>
+        <div id="output-stt">
+          <h1>Translation</h1>
+          <p>{{in_out}}</p>
+        </div>
+      </div>
     </main>
   </body>
 </html>

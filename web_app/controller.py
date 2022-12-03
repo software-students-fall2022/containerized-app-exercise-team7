@@ -32,7 +32,7 @@ bootstrap = Bootstrap(app)
 # if you do not yet have a file named .env, make one based on the template in env.example
 
 def get_db():
-        # turn on debugging if in development mode
+    # turn on debugging if in development mode
     config = dotenv_values(".env")
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
@@ -42,12 +42,14 @@ def get_db():
         #                     username=config['MONGO_USER'],
         #                     password=config['MONGO_PASS'],
         #                     serverSelectionTimeoutMS=5000)
-        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        cxn = pymongo.MongoClient(
+            config['MONGO_URI'], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
-            db = cxn[config['MONGO_DBNAME']]  # store a reference to the database
+            # store a reference to the database
+            db = cxn[config['MONGO_DBNAME']]
             # if we get here, the connection worked!
             print(' *', 'Connected to MongoDB!')
 
@@ -96,13 +98,15 @@ def db_init(db):
 
 # route for homepage
 # Takes in a audio file and display the transcript
+
+
 @app.route('/', methods=["GET", "POST"])
 def home():
     """
     Route for the home page
     """
 
-    db=get_db()
+    db = get_db()
     # initalize the database with the languages that can be translated
     db_init(db)
     # pass database in twice for both drop down menus
@@ -138,9 +142,9 @@ def translate():
     # get the options selected from input and output from home.html
     inp = "English"
     out = request.form.get('output')
-    db=get_db()
+    db = get_db()
     # using the languages chosen by the user locate their doc in the database
-    src = db.langs.find_one({"lang": str(inp)})
+    src = db.langs.find_one({"lang": inp})
     targ = db.langs.find_one({"lang": str(out)})
     # isolate the code to be used for translation
     s = src["code"]
