@@ -114,6 +114,7 @@ def home():
         # save audio to audio.wav file through flask server
         with open('audio.wav', 'wb') as audio:
             f.save(audio)
+            # global file
             file = 'audio.wav'
         if file:
             # implement speech recognition
