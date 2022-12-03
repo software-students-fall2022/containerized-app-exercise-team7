@@ -23,19 +23,19 @@ class Test_Web_App(unittest.TestCase):
     def test_db_connect(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
-        db=get_db()
+        db=get_db(0)
         assert db.command("buildinfo")
 
     def test_db_collection(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
-        db=get_db()
+        db=get_db(0)
         assert db.list_collection_names()==["langs"]
     
     def test_db_languages(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
-        db=get_db()
+        db=get_db(0)
         assert db.langs.find({"lang": "English", "code": "en"})
         assert db.langs.find({"lang": "Spanish", "code": "es"})
         assert db.langs.find({"lang": "French", "code": "fr"})

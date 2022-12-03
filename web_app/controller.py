@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect
 from werkzeug.utils import secure_filename
 from unicodedata import name
 from dotenv import dotenv_values
@@ -8,6 +8,7 @@ from flask_bootstrap import Bootstrap
 import speech_recognition as sr
 import sys
 import os
+import flask
 import trans
 import importlib
 import itertools
@@ -87,8 +88,9 @@ def db_lang_init(db):
                           ])
 
 
-def db_text_add(db, file, input_text, output_text):
-    db.hist.insert_one({})
+def db_text_add(db, input_text, out_lang, output_text):
+    db.hist.insert_one(
+        {"input": input_text, "output_lang": out_lang, "output": output_text})
 
 # ****************** All Routes ******************************#
 # (DONE)
@@ -112,7 +114,6 @@ def home():
         # save audio to audio.wav file through flask server
         with open('audio.wav', 'wb') as audio:
             f.save(audio)
-            # global file
             file = 'audio.wav'
         if file:
             # implement speech recognition
@@ -123,9 +124,7 @@ def home():
             # save the audio translation to global variable for easy accesibility
             global transcript
             transcript = recognizer.recognize_google(data, key=None)
-            print(transcript)
     # pass database in to be read in home.html
-    # return render_template('home.html', inp=inp, out=out)
     return render_template('home.html', out=out)
 
 # route for translating the recognized audio file input using machine learning
@@ -145,8 +144,11 @@ def translate():
     s = src["code"]
     t = targ["code"]
     # call the trans function and translate the text to language
-    in_out = trans.trans(transcript, s, t)
-    # db_text_add(db_text, file, transcript, in_out)
+    try:
+        in_out = trans.trans(transcript, s, t)
+    except:
+        return render_template('translate.html', error=True)
+    db_text_add(db_text, transcript, out, in_out)
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 
