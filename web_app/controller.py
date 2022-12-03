@@ -29,27 +29,16 @@ bootstrap = Bootstrap(app)
 
 def get_db(num):
     # turn on debugging if in development mode
-
-
-def get_db(num):
-    # turn on debugging if in development mode
     config = dotenv_values(".env")
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
         cxn = pymongo.MongoClient(
             config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-        cxn = pymongo.MongoClient(
-            config['MONGO_URI'], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
-            # store a reference to the database
-            if num == 0:
-                db = cxn[config['MONGO_LANG_DBNAME']]
-            else:
-                db = cxn[config['MONGO_TEXT_DBNAME']]
             if num == 0:
                 # store a reference to the database
                 db = cxn[config['MONGO_LANG_DBNAME']]
@@ -113,7 +102,6 @@ def db_text_add(db, input_text, out_lang, output_text):
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-    db = get_db(0)
     db = get_db(0)
     # initalize the database with the languages that can be translated
     db_lang_init(db)
