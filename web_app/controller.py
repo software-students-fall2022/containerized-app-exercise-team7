@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request, redirect
+from flask import Flask, jsonify, render_template, request, redirect
 from werkzeug.utils import secure_filename
 from unicodedata import name
 from dotenv import dotenv_values
@@ -8,6 +9,7 @@ from flask_bootstrap import Bootstrap
 import speech_recognition as sr
 import sys
 import os
+import flask
 import flask
 import trans
 import importlib
@@ -114,7 +116,6 @@ def home():
         # save audio to audio.wav file through flask server
         with open('audio.wav', 'wb') as audio:
             f.save(audio)
-            # global file
             file = 'audio.wav'
         if file:
             # implement speech recognition
