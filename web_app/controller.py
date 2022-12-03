@@ -18,6 +18,7 @@ import datetime
 import sys
 #import speech_recognition as sr
 
+recorded = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -114,6 +115,7 @@ def home():
     inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
+        recorded = True
         # get audio from app.js
         f = request.files['audio_data']
         # save audio to audio.wav file through flask server
@@ -150,8 +152,11 @@ def translate():
     s = src["code"]
     t = targ["code"]
     # call the trans function and translate the text to language
-    in_out = trans.trans(transcript, s, t)
-    return render_template('translate.html', in_out=in_out, transcript=transcript)
+    if recorded:
+        in_out = trans.trans(transcript, s, t)
+        return render_template('translate.html', in_out=in_out, transcript=transcript)
+    else:
+        return render_template('translate.html')
 
 
 @app.route('/dashboard', methods=["GET", "POST"])
