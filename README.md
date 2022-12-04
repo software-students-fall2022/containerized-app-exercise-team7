@@ -71,10 +71,12 @@ Create a `.env` file and can set them as environment variables.
 Under root for the project, create `.env` file with content:
 
 ```env
-FLASK_ENV = development
+FLASK_DEBUG = development
 
 MONGO_URI = mongodb://localhost:27017/
 MONGO_DBNAME = language
+MONGO_USER = admin
+MONGO_PASS = 123456
 ```
 
 ## Required dependencies
