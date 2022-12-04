@@ -34,6 +34,7 @@ def get_db(num):
         # turn on debugging, if in development
         app.debug = True  # debug mode
         cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config['MONGO_USER'], password=config['MONGO_PASS'],serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
@@ -121,7 +122,7 @@ def home():
 # route for translating the recognized audio file input using machine learning
 
 
-@app.route('/translate', methods=["GET", "POST"])
+@app.route('/translate', methods=["POST"])
 def translate():
     # get the options selected from input and output from home.html
     inp = "English"
@@ -143,10 +144,10 @@ def translate():
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 
-@app.route('/dashboard', methods=["GET", "POST"])
+@app.route('/dashboard', methods=["GET"])
 def dashboard_display():
     return render_template('dashboard.html')
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":      
     app.run(debug=True, threaded=True)

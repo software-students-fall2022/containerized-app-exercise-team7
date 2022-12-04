@@ -15,34 +15,49 @@ class Test_Web_App(unittest.TestCase):
         self.app = None
         self.appctx = None
         
-
     def test_app(self):
         assert self.app is not None
         assert current_app == self.app
 
-    def test_db_connect(self):
-        self.setUp()
-        response = self.client.get('/', follow_redirects=True)
-        db=get_db(0)
-        assert db.command("buildinfo")
-
-    def test_db_collection(self):
-        self.setUp()
-        response = self.client.get('/', follow_redirects=True)
-        db=get_db(0)
-        assert db.list_collection_names()==["langs"]
-    
-    def test_db_languages(self):
-        self.setUp()
-        response = self.client.get('/', follow_redirects=True)
-        db=get_db(0)
-        assert db.langs.find({"lang": "English", "code": "en"})
-        assert db.langs.find({"lang": "Spanish", "code": "es"})
-        assert db.langs.find({"lang": "French", "code": "fr"})
-        assert db.langs.find({"lang": "Japanese", "code": "ja"})
-        assert db.langs.find({"lang": "Chinese", "code": "zh-CN"})
-   
-    def test_home_connect(self):
+    def test_home__get_connect(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
         assert response.status_code == 200
+
+    def test_home_get_langs(self):
+        self.setUp()
+        response = self.client.get('/', follow_redirects=True)
+        text=response.get_data(as_text=True)
+        db=get_db(0)
+        cursor = db.langs.find({})
+        for document in cursor:
+            assert document['lang'] in text
+
+    def test_home_get_functionality(self):
+        self.setUp()
+        response = self.client.get('/', follow_redirects=True)
+        text=response.get_data(as_text=True)
+        content=["Record","Pause","Stop",
+                    "Record Audio",
+                    "Format: start recording to see sample rate",
+                    "Select",
+                    "Upload",
+                    "Output Language",
+                    "Translate"]
+        str1="next to the audio you would like to translate and select the language you would like to translate the recording to."
+        list_str1=str1.split()
+        content+=list_str1
+        for item in content:
+            assert item in text
+
+    def test_dashboard_connect(self):
+        self.setUp()
+        reponse=self.client.post('/dashboard')
+        assert reponse.status_code==200
+
+    def test_dashboard_connect(self):
+        self.setUp()
+        reponse=self.client.post('/dashboard')
+        text=reponse.get_data(as_text=True)
+        assert "Translation History" in text
+
