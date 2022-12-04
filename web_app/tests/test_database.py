@@ -27,15 +27,15 @@ class Test_Web_App(unittest.TestCase):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
         db = get_db(0)
+        db_text = get_db(1)
         assert db.command("buildinfo")
+        assert db_text.command("buildinfo")
 
 
     def test_db_collection(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
-        db_text = get_db(1)
         db_lang = get_db(0)
-        assert db_text.list_collection_names() == ["hist"]
         assert db_lang.list_collection_names() == ["langs"]
 
 
