@@ -164,6 +164,10 @@ def delete_history():
     get_db(1).hist.delete_many({})
     return render_template('dashboard.html')
 
+def get_transcript(text):
+    transcript=text
+    return transcript
+
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
