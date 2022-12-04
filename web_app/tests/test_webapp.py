@@ -62,8 +62,8 @@ class Test_Web_App(unittest.TestCase):
         assert "Translation History" in text
 
 def test_post_translate_Chinese(self):
-    client=app.test_client()
+    self.setUp()
     transcript="hello"
-    response=client.post('/translate',data={"output":"Chinese"},follow_redirects=True)
+    response=self.client.post('/translate',data={"output":"Chinese"},follow_redirects=True)
     text=response.get_data(as_text=True)
     assert "你好" in text
