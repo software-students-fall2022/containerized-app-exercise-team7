@@ -47,9 +47,3 @@ class Test_Web_App(unittest.TestCase):
         assert db.langs.find({"lang": "Japanese", "code": "ja"})
         assert db.langs.find({"lang": "Chinese", "code": "zh-CN"})
 
-
-    def test_home_connect(self):
-        self.setUp()
-        response = self.client.get('/', follow_redirects=True)
-        assert response.status_code == 200
-

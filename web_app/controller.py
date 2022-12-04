@@ -34,8 +34,7 @@ def get_db(num):
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
-        cxn = pymongo.MongoClient(
-            config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
@@ -131,7 +130,7 @@ def home():
 # route for translating the recognized audio file input using machine learning
 
 
-@app.route('/translate', methods=["GET", "POST"])
+@app.route('/translate', methods=["POST"])
 def translate():
     # get the options selected from input and output from home.html
     inp = "English"
@@ -153,7 +152,7 @@ def translate():
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 
-@app.route('/dashboard', methods=["GET", "POST"])
+@app.route('/dashboard', methods=["GET"])
 def dashboard_display():
     translations = get_db(1).hist.find({})
     count = get_db(1).hist.count_documents({})
@@ -167,4 +166,10 @@ def delete_history():
 
 
 if __name__ == "__main__":
+    client=app.test_client()
+    response=client.get('/dashboard',follow_redirects=True)
+    text=response.get_data(as_text=True)
+    print("Translation History" in text)
+    
+    
     app.run(debug=True, threaded=True)
