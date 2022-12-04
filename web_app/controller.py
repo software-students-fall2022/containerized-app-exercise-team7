@@ -56,9 +56,6 @@ def get_db(num):
 
 
 def db_lang_init(db):
-
-
-def db_lang_init(db):
     db.langs.delete_many({})
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
