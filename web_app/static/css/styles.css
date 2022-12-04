@@ -110,6 +110,7 @@ select {
   padding: 15px;
   font-size: large;
   text-decoration: none;
+  color: black;
 }
 
 .close:active {
@@ -135,5 +136,19 @@ td {
   padding: 10px;
   border: 1px solid black;
   text-align: center;
+}
+
+.del-btn {
+  border-radius: 15px;
+  background-color: #E88675;
+  border: 2px solid black;
+  padding: 15px;
+  font-size: large;
+  text-decoration: none;
+  color: black;
+}
+
+.del-btn:active {
+  transform: translateY(2px);
 }
 
