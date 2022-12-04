@@ -62,6 +62,10 @@ button:active {
   transform: translateY(2px);
 }
 
+#translate-btn {
+  background-color: #75D4B8;
+}
+
 .form-group {
   gap: 20px;
   display: flex;
