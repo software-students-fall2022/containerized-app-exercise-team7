@@ -19,7 +19,7 @@ class Test_Web_App(unittest.TestCase):
         assert self.app is not None
         assert current_app == self.app
 
-    def test_home__get_connect(self):
+    def test_home_get_connect(self):
         self.setUp()
         response = self.client.get('/', follow_redirects=True)
         assert response.status_code == 200
