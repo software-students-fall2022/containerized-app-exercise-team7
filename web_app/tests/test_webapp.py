@@ -1,6 +1,6 @@
 import unittest
 from flask import current_app
-from controller import app,get_db
+from controller import app,get_db,get_transcript
 
 
 class Test_Web_App(unittest.TestCase):
@@ -52,7 +52,7 @@ class Test_Web_App(unittest.TestCase):
 
     def test_dashboard_connect(self):
         self.setUp()
-        reponse=self.client.post('/dashboard')
+        reponse=self.client.get('/dashboard')
         assert reponse.status_code==200
 
     def test_dashboard_connect(self):
@@ -63,7 +63,7 @@ class Test_Web_App(unittest.TestCase):
 
     def test_post_translate_Chinese(self):
         self.setUp()
-        transcript="hello"
+        transcript=get_transcript("hello")
         response=self.client.post('/translate',data={"output":"Chinese"},follow_redirects=True)
         text=response.get_data(as_text=True)
         assert "你好" in text
