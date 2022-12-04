@@ -9,13 +9,13 @@ import speech_recognition as sr
 import sys
 import os
 import flask
-import flask
 import trans
 import importlib
 import itertools
 import pymongo
 import datetime
 import sys
+
 #import speech_recognition as sr
 
 recorded = False
