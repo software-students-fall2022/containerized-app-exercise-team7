@@ -116,3 +116,24 @@ select {
   transform: translateY(2px);
 }
 
+.dashboard-pg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+th {
+  padding: 10px;
+  border: 1px solid black;
+  background-color: #728BF6;
+  color: #FAFAFB;
+  width: 500px;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid black;
+  text-align: center;
+}
+

@@ -153,6 +153,14 @@ def translate():
 
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard_display():
+    translations = get_db(1).hist.find({})
+    count = get_db(1).hist.count_documents({})
+    return render_template('dashboard.html', translations=translations, count=count)
+
+
+@app.route('/dashboard/delete', methods=["GET", "POST"])
+def delete_history():
+    get_db(1).hist.delete_many({})
     return render_template('dashboard.html')
 
 
