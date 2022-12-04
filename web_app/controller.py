@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, render_template, request, redirect
-from flask import Flask, jsonify, render_template, request, redirect
 from werkzeug.utils import secure_filename
 from unicodedata import name
 from dotenv import dotenv_values
@@ -10,18 +9,14 @@ import speech_recognition as sr
 import sys
 import os
 import flask
-import flask
 import trans
 import importlib
 import itertools
-
-
 import pymongo
 import datetime
 import sys
 #import speech_recognition as sr
 
-recorded = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -43,8 +38,8 @@ def get_db(num):
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
+            # store a reference to the database
             if num == 0:
-                # store a reference to the database
                 db = cxn[config['MONGO_LANG_DBNAME']]
             else:
                 db = cxn[config['MONGO_TEXT_DBNAME']]
@@ -110,7 +105,6 @@ def home():
     # inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
-        recorded = True
         # get audio from app.js
         f = request.files['audio_data']
         # save audio to audio.wav file through flask server
