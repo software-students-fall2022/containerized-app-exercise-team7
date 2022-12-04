@@ -57,7 +57,7 @@ class Test_Web_App(unittest.TestCase):
 
     def test_dashboard_connect(self):
         self.setUp()
-        reponse=self.client.post('/dashboard')
+        reponse=self.client.post('/dashboard',follow_redirects=True)
         text=reponse.get_data(as_text=True)
         assert "Translation History" in text
 

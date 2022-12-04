@@ -33,8 +33,8 @@ def get_db(num):
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
-        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-        #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config['MONGO_USER'], password=config['MONGO_PASS'],serverSelectionTimeoutMS=5000)
+        #cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        cxn = pymongo.MongoClient(config['MONGO_URI'], username=config['MONGO_USER'], password=config['MONGO_PASS'],serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
@@ -149,5 +149,11 @@ def dashboard_display():
     return render_template('dashboard.html')
 
 
-if __name__ == "__main__":      
+if __name__ == "__main__":
+    client=app.test_client()
+    response=client.get('/dashboard',follow_redirects=True)
+    text=response.get_data(as_text=True)
+    print("Translation History" in text)
+    
+    
     app.run(debug=True, threaded=True)
