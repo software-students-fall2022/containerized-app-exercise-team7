@@ -40,6 +40,7 @@ def get_db(num):
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
+
             if num == 0:
                 # store a reference to the database
                 db = cxn[config['MONGO_LANG_DBNAME']]
@@ -90,6 +91,7 @@ def db_lang_init(db):
 def db_text_add(db, input_text, out_lang, output_text):
     db.hist.insert_one(
         {"input": input_text, "output_lang": out_lang, "output": output_text})
+
 
 # ****************** All Routes ******************************#
 # (DONE)
