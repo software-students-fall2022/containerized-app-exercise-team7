@@ -93,7 +93,6 @@ def db_text_add(db, input_text, out_lang, output_text):
 
 
 # ****************** All Routes ******************************#
-# (DONE)
 
 # route for homepage
 # Takes in a audio file and display the transcript
@@ -102,6 +101,7 @@ def db_text_add(db, input_text, out_lang, output_text):
 @app.route('/', methods=["GET", "POST"])
 def home():
     db = get_db(0)
+    db_text = get_db(1)
     # initalize the database with the languages that can be translated
     db_lang_init(db)
     # pass database in twice for both drop down menus
