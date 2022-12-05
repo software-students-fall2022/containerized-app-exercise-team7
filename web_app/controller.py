@@ -24,7 +24,7 @@ recorded = False
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://db:27017/'
 bootstrap = Bootstrap(app)
-client = MongoClient(host='db', port=27017)
+cxn = MongoClient(host='db', port=27017)
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 
@@ -36,9 +36,9 @@ def get_db(num):
    
     if num == 0:
                 # store a reference to the database
-                db = client["language"]
+                db = cxn["language"]
     else:
-                db = client["text"]
+                db = cxn["text"]
 
     # if config['FLASK_DE'] == 'development':
         # turn on debugging, if in development
