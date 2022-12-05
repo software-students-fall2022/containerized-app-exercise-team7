@@ -1,3 +1,5 @@
+![Workflow Status](https://github.com/software-students-fall2022/containerized-app-exercise-team7/actions/workflows/webapp_test.yml/badge.svg?event=push)
+
 # Containerized App Exercise
 
 Build a containerized app made up of multiple subsystems, each operating in a container.
