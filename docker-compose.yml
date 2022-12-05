@@ -1,25 +1,26 @@
 services:
   app:
-    build: .
-    command: python -u ./web-app/app.py
+    container_name: app
+    build: ./web_app
+    command: python ./web_app/controller.py
     ports:
       - "5000:5000"
-    volumes:
-      - .:/app
     links:
       - db
-  db:
-    image: mongo:latest
-    hostname: test_mongodb
+    volumes:
+      - .:/web_app
     environment:
-      - MONGO_INITDB_DATABASE=;angs
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+    #    FLASK_DE : development
+    #    FLASK_APP : web_app\controller.py
+    #    MONGO_URI : mongodb://mongodb:27017
+       MONGO_LANG_DBNAME : language
+       MONGO_TEXT_DBNAME : text
+       MONGO_USER : admin
+       MONGO_PASS : 123456
+  db:
+    container_name: db
+    image: mongo:latest
     volumes:
       - ./db/languages.js:/docker-entrypoint-languages.d/languages.js:ro 
     ports:
-      - 27017:27017
-  ml-client:
-    build: ./machine-learning-client
-    volumes:
-      - .:/machine-learning-client
+      - "27017:27017"
