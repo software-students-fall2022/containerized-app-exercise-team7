@@ -75,7 +75,7 @@ def db_lang_init(db):
                           {"lang": "Latvian", "code": "lv"},
                           {"lang": "Dutch", "code": "nl"},
                           {"lang": "Polish", "code": "pl"},
-                          {"lang": "Portuguese (Brazil)", "code": "pt"},
+                          {"lang": "Portuguese", "code": "pt"},
                           {"lang": "Romanian", "code": "ro"},
                           {"lang": "Russian", "code": "ru"},
                           {"lang": "Slovak", "code": "sk"},
@@ -162,11 +162,6 @@ def dashboard_display():
 def delete_history():
     get_db(1).hist.delete_many({})
     return render_template('dashboard.html')
-
-# def get_transcript(text):
-#     transcript=text
-#     return transcript
-
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
