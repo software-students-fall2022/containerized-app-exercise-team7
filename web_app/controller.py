@@ -12,13 +12,13 @@ import flask
 import trans
 import importlib
 import itertools
-
-
 import pymongo
 import datetime
 import sys
+
 #import speech_recognition as sr
 
+recorded = False
 
 # instantiate the app
 app = Flask(__name__)
@@ -27,19 +27,23 @@ bootstrap = Bootstrap(app)
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 
+
 def get_db(num):
-        # turn on debugging if in development mode
+    # turn on debugging if in development mode
     config = dotenv_values(".env")
     if config['FLASK_DEBUG'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
         cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+        #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config["MONGO_USER"],password=config["MONGO_PASS"], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
-            if num==0:
-                db = cxn[config['MONGO_LANG_DBNAME']]  # store a reference to the database
+
+            if num == 0:
+                # store a reference to the database
+                db = cxn[config['MONGO_LANG_DBNAME']]
             else:
                 db = cxn[config['MONGO_TEXT_DBNAME']]
             # if we get here, the connection worked!
@@ -71,8 +75,7 @@ def db_lang_init(db):
                           {"lang": "Latvian", "code": "lv"},
                           {"lang": "Dutch", "code": "nl"},
                           {"lang": "Polish", "code": "pl"},
-                          {"lang": "Portuguese (Brazil)", "code": "pt-BR"},
-                          {"lang": "Portuguese (Portugal)", "code": "pt-PT"},
+                          {"lang": "Portuguese", "code": "pt"},
                           {"lang": "Romanian", "code": "ro"},
                           {"lang": "Russian", "code": "ru"},
                           {"lang": "Slovak", "code": "sk"},
@@ -83,23 +86,29 @@ def db_lang_init(db):
                           {"lang": "Chinese", "code": "zh-CN"},
                           ])
 
+
 def db_text_add(db, input_text, out_lang, output_text):
-    db.hist.insert_one({ "input": input_text, "output_lang": out_lang, "output": output_text})
+    db.hist.insert_one(
+        {"input": input_text, "output_lang": out_lang, "output": output_text})
+
 
 # ****************** All Routes ******************************#
-# (DONE)
 
 # route for homepage
 # Takes in a audio file and display the transcript
+
+
 @app.route('/', methods=["GET", "POST"])
 def home():
-    db=get_db(0)
+    db = get_db(0)
+    db_text = get_db(1)
     # initalize the database with the languages that can be translated
     db_lang_init(db)
     # pass database in twice for both drop down menus
     # inp = db.langs.find({})
     out = db.langs.find({})
     if request.method == "POST":
+        recorded = True
         # get audio from app.js
         f = request.files['audio_data']
         # save audio to audio.wav file through flask server
@@ -120,16 +129,15 @@ def home():
 
 # route for translating the recognized audio file input using machine learning
 
-
-@app.route('/translate', methods=["GET", "POST"])
+@app.route('/translate', methods=["POST"])
 def translate():
     # get the options selected from input and output from home.html
     inp = "English"
     out = request.form.get('output')
-    db=get_db(0)
-    db_text=get_db(1)
+    db = get_db(0)
+    db_text = get_db(1)
     # using the languages chosen by the user locate their doc in the database
-    src = db.langs.find_one({"lang": str(inp)})
+    src = db.langs.find_one({"lang": inp})
     targ = db.langs.find_one({"lang": str(out)})
     # isolate the code to be used for translation
     s = src["code"]
@@ -143,10 +151,17 @@ def translate():
     return render_template('translate.html', in_out=in_out, transcript=transcript)
 
 
-@app.route('/dashboard', methods=["GET", "POST"])
+@app.route('/dashboard', methods=["GET"])
 def dashboard_display():
-    return render_template('dashboard.html')
+    translations = get_db(1).hist.find({})
+    count = get_db(1).hist.count_documents({})
+    return render_template('dashboard.html', translations=translations, count=count)
 
+
+@app.route('/dashboard/delete', methods=["GET", "POST"])
+def delete_history():
+    get_db(1).hist.delete_many({})
+    return render_template('dashboard.html')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)

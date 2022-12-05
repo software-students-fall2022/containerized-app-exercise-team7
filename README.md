@@ -1,5 +1,9 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9335331&assignment_repo_type=AssignmentRepo)
 
+![Workflow Status](https://github.com/software-students-fall2022/containerized-app-exercise-team7/actions/workflows/webapp_test.yml/badge.svg?event=push)
+
+![Workflow Status](https://github.com/software-students-fall2022/containerized-app-exercise-team7/actions/workflows/machine_learning_test.yml/badge.svg?event=push)
+
 # Containerized App Exercise
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
@@ -9,6 +13,12 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 [2, Root environment](#root-environment)
 
 [3, Required dependencies](#required-dependencies)
+
+[4, Usage Instructions](#usage-instructions)
+
+[5, Supported Languages](#supported-languages)
+
+[6, Contributors](#contributors)
 
 ## Local mongodb database set up within Docker
 
@@ -71,10 +81,12 @@ Create a `.env` file and can set them as environment variables.
 Under root for the project, create `.env` file with content:
 
 ```env
-FLASK_ENV = development
+FLASK_DEBUG = development
 
 MONGO_URI = mongodb://localhost:27017/
 MONGO_DBNAME = language
+MONGO_USER = admin
+MONGO_PASS = 123456
 ```
 
 ## Required dependencies
@@ -133,8 +145,7 @@ TRANSLATE the recording by clicking the translate button
 - Latvian
 - Dutch
 - Polish
-- Portuguese (Brazil)
-- Portuguese (Portugal)
+- Portuguese
 - Romanian
 - Russian
 - Slovak
