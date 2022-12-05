@@ -1,5 +1,5 @@
 #base image
-FROM python:3.10.4
+FROM python:3.9-bullseye
 
 #set work directory insideimage
 WORKDIR /web_app

@@ -22,28 +22,30 @@ recorded = False
 
 # instantiate the app
 app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://db:27017/'
 bootstrap = Bootstrap(app)
-
+client = MongoClient(host='db', port=27017)
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 
 
 def get_db(num):
-    db= ""
+    db = ""
     # turn on debugging if in development mode
-    config = dotenv_values(".env")
-    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    # config = dotenv_values(".env")
+   
     if num == 0:
                 # store a reference to the database
-                db = cxn[config['MONGO_LANG_DBNAME']]
+                db = client["language"]
     else:
-                db = cxn[config['MONGO_TEXT_DBNAME']]
-    if config['FLASK_DE'] == 'development':
+                db = client["text"]
+
+    # if config['FLASK_DE'] == 'development':
         # turn on debugging, if in development
-        app.debug = True  # debug mode
+        # app.debug = True  # debug mode
        
         #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config["MONGO_USER"],password=config["MONGO_PASS"], serverSelectionTimeoutMS=5000)
-        try:
+    try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
@@ -51,10 +53,10 @@ def get_db(num):
             
             # if we get here, the connection worked!
             print(' *', 'Connected to MongoDB!')
-        except Exception as e:
+    except Exception as e:
             # the ping command failed, so the connection is not available.
             # render_template('error.html', error=e) # render the edit template
-            print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+            print(' *', "Failed to connect to MongoDB at", 'mongodb://mongodb:27017/')
             print('Database connection error:', e)  # debug
     return db
 
@@ -62,11 +64,6 @@ def get_db(num):
 def db_lang_init(db):
     # db.langs.delete_many({})
     
-    col = db.create_collection(
-        name="langs",
-        host = 'mongo',
-        port = 27017
-    )
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
@@ -178,4 +175,4 @@ def delete_history():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True)
+    app.run(host = "0.0.0.0", port = 5000, threaded=True)
