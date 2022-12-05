@@ -28,9 +28,10 @@ bootstrap = Bootstrap(app)
 
 
 def get_db(num):
+    # load_dotenv('.env')
     config = dotenv_values(".env")
     # cxn = MongoClient(host='db', port=27017)
-    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    cxn = pymongo.MongoClient(os.getenv('MONGO_URI'), serverSelectionTimeoutMS=5000)
     db = ""
     if num == 0:
                 # store a reference to the database
