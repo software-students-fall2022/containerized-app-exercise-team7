@@ -1,6 +1,8 @@
 import unittest
+import trans
+import speech_recognition as sr
 from flask import current_app
-from controller import app,get_db,get_transcript
+from controller import app,get_db
 
 
 
@@ -65,10 +67,12 @@ class Test_Web_App(unittest.TestCase):
     def test_post_translate_Chinese(self):
         self.setUp()
         f=open("test.wav","rb")
+        db = get_db(0)
+        entries = db.langs.find({})
         self.client.post('/',data={"audio_data":f},follow_redirects=True)
-        transcript=get_transcript("hello")
-        response=self.client.post('/translate',data={"output":"Chinese"},follow_redirects=True)
-        text=response.get_data(as_text=True)
-        assert "你好" in text
-
+        for cur in entries:
+            response=self.client.post('/translate',data={"output":cur["lang"]},follow_redirects=True)
+            text=response.get_data(as_text=True)
+            out_text = trans.trans("hello", "en", cur["code"])
+            assert out_text in text
 
