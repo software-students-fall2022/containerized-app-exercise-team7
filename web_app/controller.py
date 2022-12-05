@@ -15,7 +15,7 @@ import itertools
 import pymongo
 import datetime
 import sys
-
+from dotenv import load_dotenv
 #import speech_recognition as sr
 
 recorded = False
@@ -24,15 +24,19 @@ recorded = False
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://db:27017/'
 bootstrap = Bootstrap(app)
-cxn = MongoClient(host='db', port=27017)
+# cxn = MongoClient(host='db', port=27017)
 # load credentials and configuration options from .env file
 # if you do not yet have a file named .env, make one based on the template in env.example
 
 
 def get_db(num):
+    load_dotenv('.env')
+    config = dotenv_values(".env")
+    cxn = pymongo.MongoClient(os.getenv('MONGO_URI'), serverSelectionTimeoutMS=5000)
     db = ""
+    
     # turn on debugging if in development mode
-    # config = dotenv_values(".env")
+    
    
     if num == 0:
                 # store a reference to the database
@@ -62,7 +66,7 @@ def get_db(num):
 
 
 def db_lang_init(db):
-    # db.langs.delete_many({})
+    db.langs.delete_many({})
     
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
