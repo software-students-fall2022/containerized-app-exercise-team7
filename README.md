@@ -2,6 +2,8 @@
 
 ![Workflow Status](https://github.com/software-students-fall2022/containerized-app-exercise-team7/actions/workflows/webapp_test.yml/badge.svg?event=push)
 
+![Workflow Status](https://github.com/software-students-fall2022/containerized-app-exercise-team7/actions/workflows/machine_learning_test.yml/badge.svg?event=push)
+
 # Containerized App Exercise
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
