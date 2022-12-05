@@ -135,8 +135,7 @@ TRANSLATE the recording by clicking the translate button
 - Latvian
 - Dutch
 - Polish
-- Portuguese (Brazil)
-- Portuguese (Portugal)
+- Portuguese
 - Romanian
 - Russian
 - Slovak

@@ -1,6 +1,9 @@
 import unittest
+import trans
+import speech_recognition as sr
 from flask import current_app
 from controller import app,get_db
+
 
 
 class Test_Web_App(unittest.TestCase):
@@ -52,7 +55,7 @@ class Test_Web_App(unittest.TestCase):
 
     def test_dashboard_connect(self):
         self.setUp()
-        reponse=self.client.post('/dashboard')
+        reponse=self.client.get('/dashboard')
         assert reponse.status_code==200
 
     def test_dashboard_connect(self):
@@ -60,4 +63,16 @@ class Test_Web_App(unittest.TestCase):
         reponse=self.client.get('/dashboard',follow_redirects=True)
         text=reponse.get_data(as_text=True)
         assert "Translation History" in text
+
+    def test_post_translate(self):
+        self.setUp()
+        f=open("test.wav","rb")
+        db = get_db(0)
+        entries = db.langs.find({})
+        self.client.post('/',data={"audio_data":f},follow_redirects=True)
+        for cur in entries:
+            response=self.client.post('/translate',data={"output":cur["lang"]},follow_redirects=True)
+            text=response.get_data(as_text=True)
+            out_text = trans.trans("hello", "en", cur["code"])
+            assert out_text in text
 
