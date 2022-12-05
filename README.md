@@ -74,6 +74,11 @@ Try to connect using the user information created above.
 db.auth('admin', '123456')
 ```
 
+Run the web app
+```bash
+docker compose up
+```
+
 ## Root environment
 
 Create a `.env` file and can set them as environment variables.
@@ -95,7 +100,7 @@ MONGO_PASS = 123456
 pip install deep_translator
 pip install SpeechRecognition
 pip install pyttsx3
-pip install pyaudio
+pip install PyAudio
 pip install flask
 pip install pymongo
 ```
