@@ -1,0 +1,167 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+}
+
+header {
+  margin-bottom: 20px;
+  padding: 50px;
+  background-color: #728BF6;
+  color: #FAFAFB;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-logo {
+  display: flex;
+}
+
+.header-btn {
+  border-radius: 15px;
+  background-color: #728BF6;
+  color: #FAFAFB;
+  border: 2px solid #FAFAFB;
+  padding: 15px;
+  font-size: large;
+  text-decoration: none;
+}
+
+.header-btn:active {
+  transform: translateY(2px);
+}
+
+body {
+  margin: 0;
+  background-color: #FAFAFB;
+  font-size: larger;
+}
+
+main {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+#controls {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+button {
+  border-radius: 15px;
+  border: 2px solid black;
+  background-color: #FAFAFB;
+  padding: 15px;
+  font-size: large;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+#translate-btn {
+  background-color: #75D4B8;
+}
+
+.form-group {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+select {
+  border-radius: 5px;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: large;
+}
+
+#input-stt {
+  margin-bottom: 60px;
+}
+
+.error-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alert {
+  margin-bottom: 20px;
+  padding: 50px;
+  border-radius: 15px;
+  background-color: #F6C94A;
+  color: black;
+  font-size: large;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.close {
+  border-radius: 15px;
+  background-color: #E88675;
+  border: 2px solid black;
+  padding: 15px;
+  font-size: large;
+  text-decoration: none;
+  color: black;
+}
+
+.close:active {
+  transform: translateY(2px);
+}
+
+.dashboard-pg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+th {
+  padding: 10px;
+  border: 1px solid black;
+  background-color: #728BF6;
+  color: #FAFAFB;
+  width: 500px;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.del-btn {
+  border-radius: 15px;
+  background-color: #E88675;
+  border: 2px solid black;
+  padding: 15px;
+  font-size: large;
+  text-decoration: none;
+  color: black;
+}
+
+.del-btn:active {
+  transform: translateY(2px);
+}
+
+img {
+  width: 70px;
+  margin-right: 30px;
+}
+

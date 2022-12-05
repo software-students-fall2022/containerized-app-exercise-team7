@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="page-logo">
+        <img
+          src="{{ url_for('static', filename='img/logo.png') }}"
+          alt="logo"
+        />
+        <h1>Record Audio</h1>
+      </div>
+      <a href="{{ url_for('dashboard_display') }}" class="header-btn">DB</a>
+    </header>
+    <main>
+      <div id="controls">
+        <button id="recordButton">Record</button>
+        <button id="pauseButton">Pause</button>
+        <button id="stopButton">Stop</button>
+      </div>
+      <div id="formats">Format: start recording to see sample rate</div>
+      <p><strong>Recordings:</strong></p>
+      <ol id="recordingsList"></ol>
+      <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+      <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+      <script src="/static/js/app.js"></script>
+      <p>
+        Select "Upload" next to the audio you would like to translate and select
+        the language you would like to translate the recording to.
+      </p>
+      <form
+        class="form-inline"
+        method="POST"
+        action="{{ url_for('translate') }}"
+      >
+        <div class="form-group">
+          <div class="input-group">
+            <div></div>
+            <div>
+              <span class="input-group-addon">Output Language</span>
+              <select name="output" class="selectpicker form-control">
+                {% for o in out %}
+                <option value="{{ o.lang }}">{{ o.lang }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-default" id="translate-btn">
+            Translate
+          </button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
