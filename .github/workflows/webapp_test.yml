@@ -55,6 +55,6 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
       - name: Test with pytest
         run: |
-          pytest tests/test_webapp.py
-          pytest tests/test_database.py
+          pytest web_app/tests/test_webapp.py
+          pytest web_app/tests/test_database.py
           
