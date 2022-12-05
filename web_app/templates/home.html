@@ -11,7 +11,13 @@
   </head>
   <body>
     <header>
-      <h1>Record Audio</h1>
+      <div class="page-logo">
+        <img
+          src="{{ url_for('static', filename='img/logo.png') }}"
+          alt="logo"
+        />
+        <h1>Record Audio</h1>
+      </div>
       <a href="{{ url_for('dashboard_display') }}" class="header-btn">DB</a>
     </header>
     <main>

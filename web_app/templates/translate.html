@@ -11,7 +11,13 @@
   </head>
   <body>
     <header>
-      <h1>Speech-to-text Translation</h1>
+      <div class="page-logo">
+        <img
+          src="{{ url_for('static', filename='img/logo.png') }}"
+          alt="logo"
+        />
+        <h1>Speech-to-text Translation</h1>
+      </div>
       <a href="{{ url_for('home') }}" class="header-btn"> &#x2190; </a>
     </header>
     {% if error %}
