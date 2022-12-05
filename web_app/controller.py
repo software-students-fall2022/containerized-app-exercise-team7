@@ -22,36 +22,32 @@ recorded = False
 
 # instantiate the app
 app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://db:27017/'
 bootstrap = Bootstrap(app)
-
-# load credentials and configuration options from .env file
-# if you do not yet have a file named .env, make one based on the template in env.example
+# cxn = pymongo.MongoClient(host='db')
 
 
 def get_db(num):
-    # turn on debugging if in development mode
+    # load_dotenv('.env')
     config = dotenv_values(".env")
-    if config['FLASK_DEBUG'] == 'development':
-        # turn on debugging, if in development
-        app.debug = True  # debug mode
-        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
-        #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config["MONGO_USER"],password=config["MONGO_PASS"], serverSelectionTimeoutMS=5000)
-        try:
+    # cxn = MongoClient(host='db', port=27017)
+    cxn = pymongo.MongoClient(os.getenv('MONGO_URI'), serverSelectionTimeoutMS=5000)
+    db = ""
+    if num == 0:
+                # store a reference to the database
+                db = cxn["language"]
+    else:
+                db = cxn["text"]
+    try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
-
-            if num == 0:
-                # store a reference to the database
-                db = cxn[config['MONGO_LANG_DBNAME']]
-            else:
-                db = cxn[config['MONGO_TEXT_DBNAME']]
             # if we get here, the connection worked!
             print(' *', 'Connected to MongoDB!')
-        except Exception as e:
+    except Exception as e:
             # the ping command failed, so the connection is not available.
             # render_template('error.html', error=e) # render the edit template
-            print(' *', "Failed to connect to MongoDB at", config['MONGO_URI'])
+            print(' *', "Failed to connect to MongoDB at", 'mongodb://mongodb:27017/')
             print('Database connection error:', e)  # debug
     return db
 
@@ -164,4 +160,4 @@ def delete_history():
     return render_template('dashboard.html')
 
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True)
+    app.run(host = "0.0.0.0", port = 5000, threaded=True)
