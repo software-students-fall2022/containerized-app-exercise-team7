@@ -64,6 +64,11 @@ class Test_Web_App(unittest.TestCase):
         text=reponse.get_data(as_text=True)
         assert "Translation History" in text
 
+    def test_dashboard_delete(self):
+        self.setUp()
+        reponse=self.client.get('/dashboard/delete')
+        assert reponse.status_code==200
+
     def test_post_translate(self):
         self.setUp()
         f=open("test.wav","rb")
