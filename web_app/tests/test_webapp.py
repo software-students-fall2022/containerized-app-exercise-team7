@@ -3,6 +3,7 @@ from flask import current_app
 from controller import app,get_db,get_transcript
 
 
+
 class Test_Web_App(unittest.TestCase):
     def setUp(self):
         self.app = app
@@ -63,7 +64,11 @@ class Test_Web_App(unittest.TestCase):
 
     def test_post_translate_Chinese(self):
         self.setUp()
+        f=open("test.wav","rb")
+        self.client.post('/',data={"audio_data":f},follow_redirects=True)
         transcript=get_transcript("hello")
         response=self.client.post('/translate',data={"output":"Chinese"},follow_redirects=True)
         text=response.get_data(as_text=True)
         assert "你好" in text
+
+
