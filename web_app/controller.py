@@ -29,23 +29,26 @@ bootstrap = Bootstrap(app)
 
 
 def get_db(num):
+    db= ""
     # turn on debugging if in development mode
     config = dotenv_values(".env")
-    if config['FLASK_DEBUG'] == 'development':
+    cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+    if num == 0:
+                # store a reference to the database
+                db = cxn[config['MONGO_LANG_DBNAME']]
+    else:
+                db = cxn[config['MONGO_TEXT_DBNAME']]
+    if config['FLASK_DE'] == 'development':
         # turn on debugging, if in development
         app.debug = True  # debug mode
-        cxn = pymongo.MongoClient(config['MONGO_URI'], serverSelectionTimeoutMS=5000)
+       
         #cxn = pymongo.MongoClient(config['MONGO_URI'], username=config["MONGO_USER"],password=config["MONGO_PASS"], serverSelectionTimeoutMS=5000)
         try:
             # verify the connection works by pinging the database
             # The ping command is cheap and does not require auth.
             cxn.admin.command('ping')
 
-            if num == 0:
-                # store a reference to the database
-                db = cxn[config['MONGO_LANG_DBNAME']]
-            else:
-                db = cxn[config['MONGO_TEXT_DBNAME']]
+            
             # if we get here, the connection worked!
             print(' *', 'Connected to MongoDB!')
         except Exception as e:
@@ -57,7 +60,13 @@ def get_db(num):
 
 
 def db_lang_init(db):
-    db.langs.delete_many({})
+    # db.langs.delete_many({})
+    
+    col = db.create_collection(
+        name="langs",
+        host = 'mongo',
+        port = 27017
+    )
     db.langs.insert_many([{"lang": "Bulgarian", "code": "bg"},
                           {"lang": "Czech", "code": "cs"},
                           {"lang": "Danish", "code": "da"},
