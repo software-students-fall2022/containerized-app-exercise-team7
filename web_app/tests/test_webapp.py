@@ -64,7 +64,7 @@ class Test_Web_App(unittest.TestCase):
         text=reponse.get_data(as_text=True)
         assert "Translation History" in text
 
-    def test_post_translate_Chinese(self):
+    def test_post_translate(self):
         self.setUp()
         f=open("test.wav","rb")
         db = get_db(0)
