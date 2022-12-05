@@ -10,6 +10,12 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 
 [3, Required dependencies](#required-dependencies)
 
+[4, Usage Instructions](#usage-instructions)
+
+[5, Supported Languages](#supported-languages)
+
+[6, Contributors](#contributors)
+
 ## Local mongodb database set up within Docker
 
 ### 1, Docker Desktop
