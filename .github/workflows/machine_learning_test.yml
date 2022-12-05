@@ -55,4 +55,4 @@ jobs:
         uses: supercharge/mongodb-github-action@1.8.0
       - name: Test with pytest
         run: |
-          pytest tests/test_machine_learning.py
+          pytest machine-learning-client/tests/test_machine_learning.py
